@@ -1,0 +1,12 @@
+python3 -m venv venv 
+source venv/bin/activate
+
+git init
+git status
+
+pip install django
+django-admin startproject app
+python manage.py
+Error port use
+sudo lsof -t -i tcp:8000
+sudo kill -9 PID(2313)
