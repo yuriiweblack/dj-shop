@@ -4,7 +4,14 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-    return HttpResponse('Hello HOME page')
+    context = {
+        'title': 'Home',
+        'content': 'Main shop page - HOME',
+        'list': ['first', 1],
+        'dict': {'second': 2},
+        'is_authenticated': False
+    }
+    return render(request, 'main/index.html', context)
 
 
 def about(request):
