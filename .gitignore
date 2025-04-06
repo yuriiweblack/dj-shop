@@ -175,3 +175,5 @@ dmypy.json
 
 #Pycharm IDE
 .idea
+
+media/
