@@ -1,9 +1,10 @@
+from django.core.paginator import Paginator
 from django.shortcuts import Http404, render
 from goods.models import Products
 
 # Create your views here.
 
-def catalog(request, category_slug):
+def catalog(request, category_slug, page=1):
 
     if category_slug == 'all':
         goods = Products.objects.all()
@@ -12,9 +13,14 @@ def catalog(request, category_slug):
         if not goods:
             raise Http404   
 
+    paginator = Paginator(goods, 3)
+    current_page = paginator.page(page)
+
+
     context = {
         'title': 'Home - Головна',
-        'goods': goods,
+        'goods': current_page,
+        'slug_url': category_slug,
     }
     return render(request, 'goods/catalog.html', context)
 
