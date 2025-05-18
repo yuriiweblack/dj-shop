@@ -7,6 +7,10 @@ from goods.models import Products
 def catalog(request, category_slug):
 
     page = request.GET.get('page', 1)
+    on_sale = request.GET.get('on_sale', None)
+    order_by = request.GET.get('order_by', None)
+
+    # print(on_sale,order_by)
 
     if category_slug == 'all':
         goods = Products.objects.all()
@@ -15,8 +19,15 @@ def catalog(request, category_slug):
         if not goods:
             raise Http404   
 
+    if on_sale:
+        print(goods)
+        goods = goods.filter(discont=0)
+        print(goods)
+    if order_by and order_by != "default":
+        goods = goods.order_by(order_by)
+
     paginator = Paginator(goods, 3)
-    current_page = paginator.page(page)
+    current_page = paginator.page(int(page))
 
 
     context = {
